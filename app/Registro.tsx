@@ -1,42 +1,64 @@
-import { Image } from 'expo-image';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import { Link, router } from 'expo-router';
+import { Image } from "expo-image";
+import { Link } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 
 export default function RegistroScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = () => {
     // Aquí iría la lógica de registro
-    console.log('Register with:', { name, email, password, confirmPassword });
+    console.log("Register with:", {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    });
   };
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require("@/assets/images/partial-react-logo.png")}
           style={styles.reactLogo}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.registerContainer}>
-        <ThemedText type="title" style={styles.title}>Crear Cuenta</ThemedText>
-        
+        <ThemedText type="title" style={styles.title}>
+          Registro Familiar
+        </ThemedText>
+
         <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Nombre completo</ThemedText>
+          <ThemedText type="defaultSemiBold">Nombre</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Juan Pérez"
-            value={name}
-            onChangeText={setName}
+            placeholder="Nombre"
+            placeholderTextColor="#fff"
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+        </ThemedView>
+
+        <ThemedView style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold">Apellidos</ThemedText>
+          <TextInput
+            style={styles.input}
+            placeholder="Apellidos"
+            placeholderTextColor="#fff"
+            value={lastName}
+            onChangeText={setLastName}
           />
         </ThemedView>
 
@@ -44,7 +66,8 @@ export default function RegistroScreen() {
           <ThemedText type="defaultSemiBold">Email</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="tu@email.com"
+            placeholder="Correo electrónico"
+            placeholderTextColor="#fff"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -56,6 +79,7 @@ export default function RegistroScreen() {
           <ThemedText type="defaultSemiBold">Contraseña</ThemedText>
           <TextInput
             style={styles.input}
+            placeholderTextColor="#fff"
             placeholder="********"
             value={password}
             onChangeText={setPassword}
@@ -67,6 +91,7 @@ export default function RegistroScreen() {
           <ThemedText type="defaultSemiBold">Confirmar contraseña</ThemedText>
           <TextInput
             style={styles.input}
+            placeholderTextColor="#fff"
             placeholder="********"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -74,7 +99,10 @@ export default function RegistroScreen() {
           />
         </ThemedView>
 
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={handleRegister}
+        >
           <ThemedText style={styles.registerButtonText}>Registrarse</ThemedText>
         </TouchableOpacity>
 
@@ -97,7 +125,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 10,
   },
   inputContainer: {
@@ -105,35 +133,36 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#2b9fff",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#2b9fff",
+    color: "#fff",
   },
   registerButton: {
-    backgroundColor: '#A1CEDC',
+    backgroundColor: "#2b9fff",
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   registerButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 15,
   },
   reactLogo: {
     height: 250,
-    width: '100%',
+    width: "100%",
     bottom: 0,
     left: 0,
-    position: 'absolute',
-    resizeMode: 'cover',
+    position: "absolute",
+    resizeMode: "cover",
   },
 });

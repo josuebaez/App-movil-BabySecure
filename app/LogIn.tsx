@@ -1,37 +1,43 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { Image } from "expo-image";
+import { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { Link, useRouter } from "expo-router";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleLogin = () => {
-    console.log('Login attempted with:', email, password);
+    console.log("Login attempted with:", email, password);
+    router.push("/PanelPrincipal" as any);
   };
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#04dcf4' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#04dcf4" }}
       headerImage={
         <Image
-          source={require('@/assets/images/Logo_BabySecure.png')}
+          source={require("@/assets/images/Logo_BabySecure.png")}
           style={styles.reactLogo}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.loginContainer}>
-        <ThemedText type="title" style={styles.title}>Iniciar Sesión</ThemedText>
-        
+        <ThemedText type="title" style={styles.title}>
+          Inicio de Sesión
+        </ThemedText>
+
         <ThemedView style={styles.inputContainer}>
           <ThemedText type="defaultSemiBold">Correo electrónico</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Correo electrónico"
+            placeholderTextColor="#fff"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -43,6 +49,7 @@ export default function LoginScreen() {
           <ThemedText type="defaultSemiBold">Contraseña</ThemedText>
           <TextInput
             style={styles.input}
+            placeholderTextColor="#fff"
             placeholder="********"
             value={password}
             onChangeText={setPassword}
@@ -55,10 +62,11 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <ThemedView style={styles.registerContainer}>
-          <ThemedText>¿No tienes cuenta? </ThemedText>
           <Link href="/Registro" asChild>
             <TouchableOpacity>
-              <ThemedText type="link">Regístrate aquí</ThemedText>
+              <ThemedText type="link" style={styles.registerText}>
+                Regístrate
+              </ThemedText>
             </TouchableOpacity>
           </Link>
         </ThemedView>
@@ -81,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 10,
   },
   inputContainer: {
@@ -89,39 +97,44 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#2b9fff",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#2b9fff",
+    color: "#fff",
   },
   loginButton: {
-    backgroundColor: '#A1CEDC',
+    backgroundColor: "#2b9fff",
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   loginButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 15,
   },
+  registerText: {
+    fontSize: 18,
+    color: "#1baa20",
+  },
   forgotPassword: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   reactLogo: {
     height: 250,
-    width: '100%',
+    width: "100%",
     bottom: 0,
     left: 0,
-    position: 'absolute',
-    resizeMode: 'cover',
+    position: "absolute",
+    resizeMode: "cover",
   },
 });
