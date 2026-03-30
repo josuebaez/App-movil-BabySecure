@@ -1,57 +1,43 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 export default function PanelPrincipalScreen() {
-  const router = useRouter();
-
-  const handleCreden = () => {
-    router.push("/Credenciales" as any);
-  };
-
-  const handleNotifi = () => {
-    router.push("/Notificaciones" as any);
-  };
-
-  const handleAccesos = () => {
-    router.push("/Accesos" as any);
-  };
-
   return (
     <ThemedView style={styles.screen}>
       <ThemedView style={styles.panelContainer}>
-        <ThemedText style={styles.title}>BabySecure</ThemedText>
-        <MaterialCommunityIcons name="mother-nurse" size={170} color="black" />
+        <ThemedText style={styles.title}>Credenciales</ThemedText>
+        <FontAwesome5 name="wallet" size={160} color="black" />
       </ThemedView>
 
-      {/* CONTENIDO */}
+      {/* CREDENCIALES */}
       <ThemedView style={styles.cont}>
-        <TouchableOpacity style={styles.notifiButton} onPress={handleNotifi}>
-          <Ionicons name="notifications" size={40} color="black" />
+        <TouchableOpacity style={styles.nfcButton}>
+          <MaterialCommunityIcons name="nfc" size={40} color="black" />
           <ThemedText style={styles.text} type="defaultSemiBold">
-            Notificaciones
+            NFC
           </ThemedText>
-          <AntDesign name="arrow-right" size={24} color="black" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.credeButton} onPress={handleCreden}>
-          <Ionicons name="lock-closed" size={40} color="black" />
+        <TouchableOpacity style={styles.bleButton}>
+          <FontAwesome name="bluetooth" size={40} color="black" />
           <ThemedText style={styles.text} type="defaultSemiBold">
-            Credenciales
+            BLE
           </ThemedText>
-          <AntDesign name="arrow-right" size={24} color="black" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.accesButton} onPress={handleAccesos}>
-          <Ionicons name="lock-closed" size={40} color="black" />
+        <TouchableOpacity style={styles.rfidButton}>
+          <MaterialCommunityIcons
+            name="cellphone-nfc"
+            size={40}
+            color="black"
+          />
           <ThemedText style={styles.text} type="defaultSemiBold">
-            Accesos
+            RFID
           </ThemedText>
-          <AntDesign name="arrow-right" size={24} color="black" />
         </TouchableOpacity>
       </ThemedView>
     </ThemedView>
@@ -61,13 +47,13 @@ export default function PanelPrincipalScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#ffc1f7",
     padding: 20,
     gap: 20,
   },
   cont: {
     flex: 1,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#ffc1f7",
     padding: 20,
     gap: 20,
   },
@@ -76,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 200,
     paddingTop: 40,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#ffc1f7",
   },
   title: {
     fontSize: 25,
@@ -84,7 +70,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 1,
   },
-  notifiButton: {
+  nfcButton: {
     width: "105%",
     flexDirection: "row",
     alignItems: "center",
@@ -93,14 +79,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#fff",
 
-    shadowColor: "#f84fd0",
+    shadowColor: "#86b4ff",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 5,
 
     elevation: 6,
   },
-  credeButton: {
+  bleButton: {
     width: "105%",
     flexDirection: "row",
     alignItems: "center",
@@ -109,14 +95,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#fff",
 
-    shadowColor: "#f84fd0",
+    shadowColor: "#86b4ff",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 5,
 
     elevation: 6,
   },
-  accesButton: {
+  rfidButton: {
     width: "105%",
     flexDirection: "row",
     alignItems: "center",
@@ -125,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#fff",
 
-    shadowColor: "#f84fd0",
+    shadowColor: "#86b4ff",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 5,
@@ -133,7 +119,6 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   text: {
-    flex: 1,
     fontSize: 18,
     color: "#000",
   },
