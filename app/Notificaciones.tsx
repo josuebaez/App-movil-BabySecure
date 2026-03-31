@@ -8,7 +8,7 @@ export default function PanelPrincipalScreen() {
     <ThemedView style={styles.screen}>
       <ThemedView style={styles.panelContainer}>
         <ThemedText style={styles.title}>Notificaciones</ThemedText>
-        <Ionicons name="notifications" size={130} color="white" />
+        <Ionicons name="notifications" size={130} color="black" />
       </ThemedView>
 
       {/* Para poder mostrar las notificaciones */}
@@ -19,7 +19,7 @@ export default function PanelPrincipalScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffc1f7",
+    backgroundColor: "#f9b6b6",
     padding: 20,
     gap: 20,
   },
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 200,
     paddingTop: 40,
-    backgroundColor: "#ffc1f7",
+    backgroundColor: "#f9b6b6",
   },
   title: {
     fontSize: 25,

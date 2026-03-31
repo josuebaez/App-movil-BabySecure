@@ -3,9 +3,12 @@ import { ThemedView } from "@/components/themed-view";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function PanelPrincipalScreen() {
+  const isAndroid = Platform.OS === "android";
+  const isIOS = Platform.OS === "ios";
+
   return (
     <ThemedView style={styles.screen}>
       <ThemedView style={styles.panelContainer}>
@@ -15,12 +18,28 @@ export default function PanelPrincipalScreen() {
 
       {/* CREDENCIALES */}
       <ThemedView style={styles.cont}>
-        <TouchableOpacity style={styles.nfcButton}>
-          <MaterialCommunityIcons name="nfc" size={40} color="black" />
-          <ThemedText style={styles.text} type="defaultSemiBold">
-            NFC
-          </ThemedText>
-        </TouchableOpacity>
+        {/*Android uso de NFC y BLE*/}
+        {isAndroid && (
+          <>
+            <TouchableOpacity style={styles.nfcButton}>
+              <MaterialCommunityIcons name="nfc" size={40} color="black" />
+              <ThemedText style={styles.text} type="defaultSemiBold">
+                NFC
+              </ThemedText>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.rfidButton}>
+              <MaterialCommunityIcons
+                name="cellphone-nfc"
+                size={40}
+                color="black"
+              />
+              <ThemedText style={styles.text} type="defaultSemiBold">
+                RFID
+              </ThemedText>
+            </TouchableOpacity>
+          </>
+        )}
 
         <TouchableOpacity style={styles.bleButton}>
           <FontAwesome name="bluetooth" size={40} color="black" />
@@ -29,16 +48,32 @@ export default function PanelPrincipalScreen() {
           </ThemedText>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.rfidButton}>
-          <MaterialCommunityIcons
-            name="cellphone-nfc"
-            size={40}
-            color="black"
-          />
-          <ThemedText style={styles.text} type="defaultSemiBold">
-            RFID
-          </ThemedText>
-        </TouchableOpacity>
+        {/*iOS*/}
+        {isIOS && (
+          <>
+            <TouchableOpacity style={styles.qrButton}>
+              <MaterialCommunityIcons
+                name="qrcode-scan"
+                size={40}
+                color="black"
+              />
+              <ThemedText style={styles.text} type="defaultSemiBold">
+                QR
+              </ThemedText>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.pinButton}>
+              <MaterialCommunityIcons
+                name="form-textbox-password"
+                size={40}
+                color="black"
+              />
+              <ThemedText style={styles.text} type="defaultSemiBold">
+                PIN
+              </ThemedText>
+            </TouchableOpacity>
+          </>
+        )}
       </ThemedView>
     </ThemedView>
   );
@@ -103,6 +138,38 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   rfidButton: {
+    width: "105%",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    padding: 30,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+
+    shadowColor: "#86b4ff",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 5,
+
+    elevation: 6,
+  },
+  qrButton: {
+    width: "105%",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    padding: 30,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+
+    shadowColor: "#86b4ff",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 5,
+
+    elevation: 6,
+  },
+  pinButton: {
     width: "105%",
     flexDirection: "row",
     alignItems: "center",

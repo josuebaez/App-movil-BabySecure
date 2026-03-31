@@ -61,13 +61,13 @@ export default function PanelPrincipalScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#62d0f1",
     padding: 20,
     gap: 20,
   },
   cont: {
     flex: 1,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#62d0f1",
     padding: 20,
     gap: 20,
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 200,
     paddingTop: 40,
-    backgroundColor: "#40c7ef",
+    backgroundColor: "#62d0f1",
   },
   title: {
     fontSize: 25,

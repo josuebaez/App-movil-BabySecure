@@ -1,11 +1,15 @@
 import { Image } from "expo-image";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 
 export default function RegistroScreen() {
   const [firstName, setFirstName] = useState("");
@@ -15,7 +19,6 @@ export default function RegistroScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = () => {
-    // Aquí iría la lógica de registro
     console.log("Register with:", {
       firstName,
       lastName,
@@ -23,82 +26,100 @@ export default function RegistroScreen() {
       password,
       confirmPassword,
     });
+    router.push("/LogIn" as any);
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
     >
-      <ThemedView style={styles.registerContainer}>
+      {/* Imagen arriba */}
+      <Image
+        source={require("@/assets/images/bebes1.jpg")}
+        style={styles.image}
+      />
+
+      <View style={styles.registerContainer}>
         <ThemedText type="title" style={styles.title}>
           Registro Familiar
         </ThemedText>
 
-        <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Nombre</ThemedText>
+        {/* Nombre */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Nombre
+          </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Nombre"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={firstName}
             onChangeText={setFirstName}
           />
-        </ThemedView>
+        </View>
 
-        <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Apellidos</ThemedText>
+        {/* Apellidos */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Apellidos
+          </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Apellidos"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={lastName}
             onChangeText={setLastName}
           />
-        </ThemedView>
+        </View>
 
-        <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Email</ThemedText>
+        {/* Email */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Email
+          </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Correo electrónico"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
           />
-        </ThemedView>
+        </View>
 
-        <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Contraseña</ThemedText>
+        {/* Contraseña */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Contraseña
+          </ThemedText>
           <TextInput
             style={styles.input}
-            placeholderTextColor="#fff"
             placeholder="********"
+            placeholderTextColor="#000"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
-        </ThemedView>
+        </View>
 
-        <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Confirmar contraseña</ThemedText>
+        {/* Confirmar contraseña */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Confirmar contraseña
+          </ThemedText>
           <TextInput
             style={styles.input}
-            placeholderTextColor="#fff"
             placeholder="********"
+            placeholderTextColor="#000"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
           />
-        </ThemedView>
+        </View>
 
+        {/* Botón */}
         <TouchableOpacity
           style={styles.registerButton}
           onPress={handleRegister}
@@ -106,49 +127,66 @@ export default function RegistroScreen() {
           <ThemedText style={styles.registerButtonText}>Registrarse</ThemedText>
         </TouchableOpacity>
 
-        <ThemedView style={styles.loginContainer}>
-          <ThemedText>¿Ya tienes cuenta? </ThemedText>
+        {/* Link a login */}
+        <View style={styles.loginContainer}>
+          <ThemedText style={{ color: "#000" }}>¿Ya tienes cuenta? </ThemedText>
           <Link href="/LogIn" asChild>
             <TouchableOpacity>
               <ThemedText type="link">Inicia sesión aquí</ThemedText>
             </TouchableOpacity>
           </Link>
-        </ThemedView>
-      </ThemedView>
-    </ParallaxScrollView>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    padding: 20,
+    gap: 20,
+    backgroundColor: "#62d0f1",
+  },
+  image: {
+    width: "100%",
+    height: 221,
+    resizeMode: "cover",
+    borderRadius: 5,
+  },
   registerContainer: {
     gap: 20,
-    padding: 20,
   },
   title: {
+    color: "#000",
     textAlign: "center",
+    fontWeight: "400",
+    fontSize: 24,
     marginBottom: 10,
   },
   inputContainer: {
     gap: 8,
   },
+  inputLabel: {
+    color: "#000",
+  },
   input: {
     borderWidth: 1,
-    borderColor: "#2b9fff",
+    borderColor: "#fff",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: "#2b9fff",
-    color: "#fff",
+    backgroundColor: "#fff",
+    color: "#000",
   },
   registerButton: {
-    backgroundColor: "#2b9fff",
+    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 10,
   },
   registerButtonText: {
-    color: "#fff",
+    color: "#000",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -156,13 +194,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 15,
-  },
-  reactLogo: {
-    height: 250,
-    width: "100%",
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    resizeMode: "cover",
   },
 });

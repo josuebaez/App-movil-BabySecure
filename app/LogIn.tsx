@@ -33,11 +33,13 @@ export default function LoginScreen() {
         </ThemedText>
 
         <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Correo electrónico</ThemedText>
+          <ThemedText type="defaultSemiBold" style={{ color: "#000" }}>
+            Correo electrónico
+          </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Correo electrónico"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -46,10 +48,12 @@ export default function LoginScreen() {
         </ThemedView>
 
         <ThemedView style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold">Contraseña</ThemedText>
+          <ThemedText type="defaultSemiBold" style={{ color: "#000" }}>
+            Contraseña
+          </ThemedText>
           <TextInput
             style={styles.input}
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             placeholder="********"
             value={password}
             onChangeText={setPassword}
@@ -89,30 +93,32 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
+    color: "#000",
     textAlign: "center",
     marginBottom: 10,
+    fontWeight: "400",
   },
   inputContainer: {
     gap: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#2b9fff",
+    borderColor: "#fff",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: "#2b9fff",
-    color: "#fff",
+    backgroundColor: "#fff",
+    color: "#000",
   },
   loginButton: {
-    backgroundColor: "#2b9fff",
+    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 10,
   },
   loginButtonText: {
-    color: "#fff",
+    color: "#000",
     fontSize: 18,
     fontWeight: "bold",
   },
