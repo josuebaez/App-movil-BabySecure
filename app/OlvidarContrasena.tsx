@@ -12,7 +12,7 @@ export default function OlvidarContraseñaScreen() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = () => {
-    // Aquí iría la lógica para enviar el email de recuperación
+    // Aquí va la lógica para enviar el email de recuperación
     console.log('Password reset requested for:', email);
     setSubmitted(true);
   };
@@ -32,7 +32,7 @@ export default function OlvidarContraseñaScreen() {
         {!submitted ? (
           <>
             <ThemedText style={styles.description}>
-              Ingresa tu email y te enviaremos instrucciones para restablecer tu contraseña.
+              Ingresa tu email y te enviaremos instrucciones para restablecer tu acceso.
             </ThemedText>
 
             <ThemedView style={styles.inputContainer}>
@@ -57,7 +57,7 @@ export default function OlvidarContraseñaScreen() {
               ✉️ Se han enviado las instrucciones a {email}
             </ThemedText>
             <ThemedText style={styles.successSubtext}>
-              Revisa tu bandeja de entrada y sigue los pasos para restablecer tu contraseña.
+              Revisa tu bandeja de entrada y sigue los pasos para restablecer tu acceso.
             </ThemedText>
           </ThemedView>
         )}
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   submitButton: {
-    backgroundColor: '#A1CEDC',
+    backgroundColor: '#49cdf6',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',

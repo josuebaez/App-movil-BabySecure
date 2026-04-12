@@ -10,21 +10,35 @@ import {
 } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function RegistroScreen() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [contraseña, setContraseña] = useState("");
+  const [confirmarContraseña, setConfirmarContraseña] = useState("");
+  const [parentezco, setParentezco] = useState("");
+  const [showParentezcoPicker, setShowParentezcoPicker] = useState(false);
+
+  const PARENTEZCO_OPTS = [
+    "Madre",
+    "Padre",
+    "Abuela",
+    "Abuelo",
+    "Hermana",
+    "Hermano",
+  ];
 
   const handleRegister = () => {
     console.log("Register with:", {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
+      nombre,
+      apellidos,
+      correo,
+      contraseña,
+      confirmarContraseña,
+      parentezco,
     });
     router.push("/LogIn" as any);
   };
@@ -34,7 +48,6 @@ export default function RegistroScreen() {
       contentContainerStyle={styles.scrollContainer}
       showsVerticalScrollIndicator={false}
     >
-      {/* Imagen arriba */}
       <Image
         source={require("@/assets/images/bebes1.jpg")}
         style={styles.image}
@@ -48,45 +61,108 @@ export default function RegistroScreen() {
         {/* Nombre */}
         <View style={styles.inputContainer}>
           <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
-            Nombre
+            Nombre *
           </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Nombre"
             placeholderTextColor="#000"
-            value={firstName}
-            onChangeText={setFirstName}
+            value={nombre}
+            onChangeText={setNombre}
           />
         </View>
 
         {/* Apellidos */}
         <View style={styles.inputContainer}>
           <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
-            Apellidos
+            Apellidos *
           </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Apellidos"
             placeholderTextColor="#000"
-            value={lastName}
-            onChangeText={setLastName}
+            value={apellidos}
+            onChangeText={setApellidos}
           />
         </View>
 
-        {/* Email */}
+        {/* Parentezco */}
+        <ThemedView style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Parentezco *
+          </ThemedText>
+
+          <TouchableOpacity
+            style={styles.pickerButton}
+            onPress={() =>
+              setShowParentezcoPicker(!showParentezcoPicker)
+            }
+          >
+            <View style={styles.contenido}>
+              <ThemedText
+                style={
+                  parentezco
+                    ? styles.pickerText
+                    : styles.pickerPlaceholder
+                }
+              >
+                {parentezco || "Selecciona tu parentezco"}
+              </ThemedText>
+
+              <MaterialIcons
+                name={
+                  showParentezcoPicker
+                    ? "expand-less"
+                    : "expand-more"
+                }
+                size={24}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {showParentezcoPicker && (
+            <ThemedView style={styles.pickerOptions}>
+              <ScrollView
+                nestedScrollEnabled
+                style={styles.pickerScroll}
+              >
+                {PARENTEZCO_OPTS.map((opcion) => (
+                  <TouchableOpacity
+                    key={opcion}
+                    style={styles.pickerOption}
+                    onPress={() => {
+                      setParentezco(opcion);
+                      setShowParentezcoPicker(false);
+                    }}
+                  >
+                    <ThemedText style={styles.pickerOptionText}>
+                      {opcion}
+                    </ThemedText>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </ThemedView>
+          )}
+        </ThemedView>
+
+        {/* Correo electrónico */}
         <View style={styles.inputContainer}>
           <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
-            Email
+            Correo electrónico *
           </ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Correo electrónico"
             placeholderTextColor="#000"
-            value={email}
-            onChangeText={setEmail}
+            value={correo}
+            onChangeText={setCorreo}
             keyboardType="email-address"
             autoCapitalize="none"
           />
+          <ThemedText type="defaultSemiBold" style={styles.aviso}>
+            Este correo se utilizará para iniciar sesión
+          </ThemedText>
         </View>
 
         {/* Contraseña */}
@@ -98,8 +174,8 @@ export default function RegistroScreen() {
             style={styles.input}
             placeholder="********"
             placeholderTextColor="#000"
-            value={password}
-            onChangeText={setPassword}
+            value={contraseña}
+            onChangeText={setContraseña}
             secureTextEntry
           />
         </View>
@@ -113,8 +189,8 @@ export default function RegistroScreen() {
             style={styles.input}
             placeholder="********"
             placeholderTextColor="#000"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
+            value={confirmarContraseña}
+            onChangeText={setConfirmarContraseña}
             secureTextEntry
           />
         </View>
@@ -124,15 +200,21 @@ export default function RegistroScreen() {
           style={styles.registerButton}
           onPress={handleRegister}
         >
-          <ThemedText style={styles.registerButtonText}>Registrarse</ThemedText>
+          <ThemedText style={styles.registerButtonText}>
+            Registrarse
+          </ThemedText>
         </TouchableOpacity>
 
-        {/* Link a login */}
+        {/* Login */}
         <View style={styles.loginContainer}>
-          <ThemedText style={{ color: "#000" }}>¿Ya tienes cuenta? </ThemedText>
+          <ThemedText style={{ color: "#000" }}>
+            ¿Ya tienes acceso?
+          </ThemedText>
           <Link href="/LogIn" asChild>
             <TouchableOpacity>
-              <ThemedText type="link">Inicia sesión aquí</ThemedText>
+              <ThemedText style={styles.link} type="link">
+                Inicia sesión aquí
+              </ThemedText>
             </TouchableOpacity>
           </Link>
         </View>
@@ -145,7 +227,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     padding: 20,
     gap: 20,
-    backgroundColor: "#62d0f1",
+    backgroundColor: "#81d6f0",
   },
   image: {
     width: "100%",
@@ -165,6 +247,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     gap: 8,
+    backgroundColor: "#81d6f0",
   },
   inputLabel: {
     color: "#000",
@@ -177,6 +260,51 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: "#fff",
     color: "#000",
+  },
+  aviso: {
+    fontSize: 12,
+    color: "#f33636",
+    marginTop: 4,
+  },
+  pickerButton: {
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 8,
+    padding: 12,
+    backgroundColor: "#fff",
+  },
+  contenido: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  pickerText: {
+    color: "#000",
+    fontSize: 16,
+  },
+  pickerPlaceholder: {
+    color: "#999",
+    fontSize: 16,
+  },
+  pickerOptions: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginTop: 5,
+    borderWidth: 1,
+    borderColor: "#2b9fff",
+    maxHeight: 200,
+  },
+  pickerScroll: {
+    maxHeight: 200,
+  },
+  pickerOption: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  pickerOptionText: {
+    color: "#2b9fff",
+    fontSize: 16,
   },
   registerButton: {
     backgroundColor: "#fff",
@@ -194,5 +322,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 15,
+  },
+  link: {
+    color: "#1baa20",
+    marginLeft: 5,
   },
 });

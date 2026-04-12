@@ -28,16 +28,6 @@ export default function PanelPrincipalScreen() {
               </ThemedText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.rfidButton}>
-              <MaterialCommunityIcons
-                name="cellphone-nfc"
-                size={40}
-                color="black"
-              />
-              <ThemedText style={styles.text} type="defaultSemiBold">
-                RFID
-              </ThemedText>
-            </TouchableOpacity>
           </>
         )}
 
@@ -48,32 +38,6 @@ export default function PanelPrincipalScreen() {
           </ThemedText>
         </TouchableOpacity>
 
-        {/*iOS*/}
-        {isIOS && (
-          <>
-            <TouchableOpacity style={styles.qrButton}>
-              <MaterialCommunityIcons
-                name="qrcode-scan"
-                size={40}
-                color="black"
-              />
-              <ThemedText style={styles.text} type="defaultSemiBold">
-                QR
-              </ThemedText>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.pinButton}>
-              <MaterialCommunityIcons
-                name="form-textbox-password"
-                size={40}
-                color="black"
-              />
-              <ThemedText style={styles.text} type="defaultSemiBold">
-                PIN
-              </ThemedText>
-            </TouchableOpacity>
-          </>
-        )}
       </ThemedView>
     </ThemedView>
   );

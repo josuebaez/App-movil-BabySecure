@@ -16,10 +16,10 @@ export default function RootLayout() {
         }} 
       />
       <Stack.Screen 
-        name="OlvidarContraseña" 
+        name="OlvidarContrasena" 
         options={{ 
           title: 'Recuperar Contraseña',
-          headerBackTitle: 'Volver'
+          headerBackTitle: 'Volver',
         }} 
       />
     </Stack>
