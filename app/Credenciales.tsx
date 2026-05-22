@@ -19,7 +19,6 @@ export default function PanelPrincipalScreen() {
       {/* CREDENCIALES */}
       <ThemedView style={styles.cont}>
         {/*Android uso de NFC y BLE*/}
-        {isAndroid && (
           <>
             <TouchableOpacity style={styles.nfcButton}>
               <MaterialCommunityIcons name="nfc" size={40} color="black" />
@@ -29,7 +28,6 @@ export default function PanelPrincipalScreen() {
             </TouchableOpacity>
 
           </>
-        )}
 
         <TouchableOpacity style={styles.bleButton}>
           <FontAwesome name="bluetooth" size={40} color="black" />

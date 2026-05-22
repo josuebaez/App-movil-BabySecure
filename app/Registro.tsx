@@ -2,6 +2,8 @@ import { Image } from "expo-image";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -9,21 +11,32 @@ import {
   View,
 } from "react-native";
 
+import axios from "axios";
+
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
+// ================= API =================
+const API_URL = "";
+
+const api = axios.create({
+  baseURL: API_URL,
+  timeout: 15000,
+  withCredentials: true,
+});
 
 export default function RegistroScreen() {
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellidos] = useState("");
   const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [confirmarContraseña, setConfirmarContraseña] = useState("");
+  const [uidMadre, setUidMadre] = useState("");
+  const [confirmacionUid, setConfirmacionUid] = useState("");
   const [parentezco, setParentezco] = useState("");
   const [showParentezcoPicker, setShowParentezcoPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const PARENTEZCO_OPTS = [
-    "Madre",
     "Padre",
     "Abuela",
     "Abuelo",
@@ -31,16 +44,67 @@ export default function RegistroScreen() {
     "Hermano",
   ];
 
-  const handleRegister = () => {
-    console.log("Register with:", {
-      nombre,
-      apellidos,
-      correo,
-      contraseña,
-      confirmarContraseña,
-      parentezco,
-    });
-    router.push("/LogIn" as any);
+  const handleRegister = async () => {
+    if (!nombre || !apellidos || !correo || !uidMadre || !confirmacionUid || !parentezco) {
+      Alert.alert("Error", "Por favor, completa todos los campos");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      Alert.alert("Error", "Ingresa un correo electrónico válido");
+      return;
+    }
+
+    if (!uidMadre.startsWith("MAMÁ-")) {
+      Alert.alert("Error", "El UID debe comenzar con 'MAMÁ-'");
+      return;
+    }
+
+    if (uidMadre !== confirmacionUid) {
+      Alert.alert("Error", "El UID y la confirmación no coinciden");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await api.post("/familiares/registro", {
+        nombre,
+        apellido: apellidos,
+        parentezco,
+        email: correo,
+        uid_madre: uidMadre,
+        confirmacion_uid: confirmacionUid,
+      });
+
+      if (response.data.success) {
+        Alert.alert(
+          "✅ Registro exitoso",
+          `¡Bienvenido/a ${nombre}! Tu cuenta ha sido creada exitosamente.\n\nAhora puedes iniciar sesión usando tu correo electrónico y el UID de la madre como contraseña.`,
+          [
+            {
+              text: "Iniciar Sesión",
+              onPress: () => router.push("/LogIn" as any),
+            },
+          ]
+        );
+      }
+    } catch (error: any) {
+      console.error("Error en registro:", error);
+
+      let mensaje = "Error al registrar usuario";
+
+      if (error.response?.data?.message) {
+        mensaje = error.response.data.message;
+      } else if (error.message === "Network Error") {
+        mensaje = "No se pudo conectar al servidor. Verifica tu conexión.";
+      }
+
+      Alert.alert("Error", mensaje);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,6 +133,7 @@ export default function RegistroScreen() {
             placeholderTextColor="#000"
             value={nombre}
             onChangeText={setNombre}
+            editable={!loading}
           />
         </View>
 
@@ -83,6 +148,7 @@ export default function RegistroScreen() {
             placeholderTextColor="#000"
             value={apellidos}
             onChangeText={setApellidos}
+            editable={!loading}
           />
         </View>
 
@@ -94,9 +160,7 @@ export default function RegistroScreen() {
 
           <TouchableOpacity
             style={styles.pickerButton}
-            onPress={() =>
-              setShowParentezcoPicker(!showParentezcoPicker)
-            }
+            onPress={() => setShowParentezcoPicker(!showParentezcoPicker)}
           >
             <View style={styles.contenido}>
               <ThemedText
@@ -159,50 +223,78 @@ export default function RegistroScreen() {
             onChangeText={setCorreo}
             keyboardType="email-address"
             autoCapitalize="none"
+            editable={!loading}
           />
           <ThemedText type="defaultSemiBold" style={styles.aviso}>
             Este correo se utilizará para iniciar sesión
           </ThemedText>
         </View>
 
-        {/* Contraseña */}
+        {/* UID de la madre */}
         <View style={styles.inputContainer}>
           <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
-            Contraseña
+            UID de la madre *
           </ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="********"
+            placeholder="MAMÁ-XXXXXXXX"
             placeholderTextColor="#000"
-            value={contraseña}
-            onChangeText={setContraseña}
-            secureTextEntry
+            value={uidMadre}
+            onChangeText={setUidMadre}
+            autoCapitalize="characters"
+            editable={!loading}
+          />
+          <ThemedText type="defaultSemiBold" style={styles.aviso}>
+            Este código debe proporcionarlo el hospital
+          </ThemedText>
+        </View>
+
+        {/* Confirmar UID */}
+        <View style={styles.inputContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
+            Confirmar UID *
+          </ThemedText>
+          <TextInput
+            style={styles.input}
+            placeholder="Vuelve a escribir el UID"
+            placeholderTextColor="#000"
+            value={confirmacionUid}
+            onChangeText={setConfirmacionUid}
+            autoCapitalize="characters"
+            editable={!loading}
           />
         </View>
 
-        {/* Confirmar contraseña */}
-        <View style={styles.inputContainer}>
-          <ThemedText type="defaultSemiBold" style={styles.inputLabel}>
-            Confirmar contraseña
+        {/* Verificación visual */}
+        {uidMadre && confirmacionUid && uidMadre !== confirmacionUid && (
+          <ThemedText style={styles.errorHint}>
+            ⚠️ Los UID no coinciden
           </ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="********"
-            placeholderTextColor="#000"
-            value={confirmarContraseña}
-            onChangeText={setConfirmarContraseña}
-            secureTextEntry
-          />
-        </View>
+        )}
+
+        {uidMadre && confirmacionUid && uidMadre === confirmacionUid && (
+          <ThemedText style={styles.successHint}>
+            ✅ UID verificado correctamente
+          </ThemedText>
+        )}
 
         {/* Botón */}
         <TouchableOpacity
-          style={styles.registerButton}
+          style={[
+            styles.registerButton,
+            (uidMadre !== confirmacionUid || !uidMadre || !confirmacionUid) &&
+              styles.registerButtonDisabled,
+          ]}
           onPress={handleRegister}
+          disabled={loading || uidMadre !== confirmacionUid || !uidMadre || !confirmacionUid}
         >
-          <ThemedText style={styles.registerButtonText}>
-            Registrarse
-          </ThemedText>
+          {loading ? (
+            <ActivityIndicator color="#000" />
+          ) : (
+            <ThemedText style={styles.registerButtonText}>
+              Registrarse
+            </ThemedText>
+          )}
         </TouchableOpacity>
 
         {/* Login */}
@@ -313,6 +405,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+  registerButtonDisabled: {
+    opacity: 0.6,
+  },
   registerButtonText: {
     color: "#000",
     fontSize: 18,
@@ -326,5 +421,17 @@ const styles = StyleSheet.create({
   link: {
     color: "#1baa20",
     marginLeft: 5,
+  },
+  errorHint: {
+    fontSize: 12,
+    color: "#ff2222",
+    textAlign: "center",
+    marginTop: -5,
+  },
+  successHint: {
+    fontSize: 12,
+    color: "#0a9f2e",
+    textAlign: "center",
+    marginTop: -5,
   },
 });
