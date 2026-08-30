@@ -16,7 +16,7 @@ import { io } from "socket.io-client";
 
 //CONFIGURACION DE API A MI SISTEMA
 
-const S_IP = "IP"
+const S_IP = "API"
 
 const getApiUrl = () => {
   if(__DEV__){

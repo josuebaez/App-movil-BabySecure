@@ -7,7 +7,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 //API
-const S_IP = "IP";
+const S_IP = "API";
 
 const getApiUrl = () => {
   if(__DEV__){
