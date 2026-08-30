@@ -47,7 +47,7 @@ export default function PanelPrincipalScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.accesButton} onPress={handleAccesos}>
-          <Ionicons name="lock-closed" size={40} color="black" />
+          <Ionicons name="finger-print" size={40} color="black" />
           <ThemedText style={styles.text} type="defaultSemiBold">
             Accesos
           </ThemedText>

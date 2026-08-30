@@ -18,7 +18,7 @@ import { ThemedView } from "@/components/themed-view";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 // ================= API =================
-const API_URL = "";
+const API_URL = "http://IP:5000/api"; 
 
 const api = axios.create({
   baseURL: API_URL,

@@ -18,7 +18,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import axios from "axios";
 
 // ============ CONFIGURACIÓN PARA API DEL SISTEMA ============
-const S_IP = "";
+const S_IP = "IP";
 
 const getApiUrl = () => {
   if (__DEV__) {
