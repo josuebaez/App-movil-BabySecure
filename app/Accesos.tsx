@@ -5,18 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator, FlatList, RefreshControl, View } from "react-native";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { API_URL, SOCKET_URL } from "@/constants/api"; 
 
-//API
-const S_IP = "API";
-
-const getApiUrl = () => {
-  if(__DEV__){
-    return `http://${S_IP}:5000/api`;
-  }
-  return `http://babysecure.com/api`;
-};
-
-const API_URL = getApiUrl();
 
 const api = axios.create ({
   baseURL: API_URL,
@@ -66,8 +56,7 @@ export default function AccesoScreen(){
 
   //WebSocket
   useEffect (() => {
-    const socketUrl = `http://${S_IP}:5000`;
-    const socket = io(socketUrl, {withCredentials: true});
+    const socket = io(SOCKET_URL, {withCredentials: true});
 
     socket.on('nuevo_evento_acceso', () => {
       cargarHistorial();

@@ -8,18 +8,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useCallback, useEffect, useState } from "react";
 import { Platform, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, View, Linking, Modal } from "react-native";
 import axios from "axios";
+import { API_URL } from "@/constants/api";
 
-//Configuración de API
-const S_IP = "API";
-
-const getApiUrl = () => {
-  if (__DEV__){
-    return `http://${S_IP}:5000/api`;
-  }
-  return "https://babysecure.com/api"
-};
-
-const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,

@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { Link, router } from "expo-router";
+import { Link, router } from "expo-router"; 
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -16,9 +16,9 @@ import axios from "axios";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { API_URL } from "@/constants/api";
 
-// ================= API =================
-const API_URL = "http://API:5000/api"; 
+
 
 const api = axios.create({
   baseURL: API_URL,

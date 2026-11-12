@@ -11,21 +11,9 @@ import {
 } from "react-native";
 import axios from "axios";
 import { io } from "socket.io-client";
+import {API_URL, SOCKET_URL} from "@/constants/api";
 
 
-
-//CONFIGURACION DE API A MI SISTEMA
-
-const S_IP = "API"
-
-const getApiUrl = () => {
-  if(__DEV__){
-    return `http://${S_IP}:5000/api`;
-  }
-  return "https://babysecure.com/api";
-};
-
-const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,
@@ -80,7 +68,7 @@ export default function NotificacionesScreen() {
 
   //WebSocket
   useEffect(() => {
-    const socketUrl = `http://${S_IP}:5000`;
+    const socketUrl = SOCKET_URL;
     const socket = io(socketUrl, {withCredentials: true});
 
     socket.on('nuevo_evento_acceso', () => {

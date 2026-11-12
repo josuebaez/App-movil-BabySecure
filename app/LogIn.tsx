@@ -16,18 +16,7 @@ import { Link, useRouter } from "expo-router";
 import Entypo from "@expo/vector-icons/Entypo";
 
 import axios from "axios";
-
-// ============ CONFIGURACIÓN PARA API DEL SISTEMA ============
-const S_IP = "API";
-
-const getApiUrl = () => {
-  if (__DEV__) {
-    return `http://${S_IP}:5000/api`;
-  }
-  return "https://dominio.com/api";
-};
-
-const API_URL = getApiUrl();
+import {API_URL} from "@/constants/api";
 
 console.log("🔧 Conectando a:", API_URL);
 
@@ -137,7 +126,7 @@ export default function LoginScreen() {
         detalles = "El servidor no responde. Verifica que esté corriendo.";
       } else if (error.message === "Network Error") {
         mensaje = "Error de conexión";
-        detalles = `No se pudo conectar al servidor en:\n${API_URL}\n\nVerifica:\n• El servidor está corriendo\n• Estás en la misma red WiFi\n• La IP ${S_IP} es correcta`;
+        detalles = `No se pudo conectar al servidor en:\n${API_URL}\n\nVerifica:\n• El servidor está corriendo\n• Estás en la misma red WiFi\n• La IP en constants/api es correcta`;
       } else if (error.response?.data?.message) {
         mensaje = error.response.data.message;
         if (mensaje.includes("UID de madre incorrecto")) {
