@@ -126,7 +126,7 @@ export default function LoginScreen() {
         detalles = "El servidor no responde. Verifica que esté corriendo.";
       } else if (error.message === "Network Error") {
         mensaje = "Error de conexión";
-        detalles = `No se pudo conectar al servidor en:\n${API_URL}\n\nVerifica:\n• El servidor está corriendo\n• Estás en la misma red WiFi\n• La IP en constants/api es correcta`;
+        detalles = `No se pudo conectar al servidor en:\n${API_URL}\n\nVerifica:\n• El backend está corriendo\n• El túnel (cloudflared) sigue activo\n• EXPO_PUBLIC_API_URL en el .env es la URL actual del túnel`;
       } else if (error.response?.data?.message) {
         mensaje = error.response.data.message;
         if (mensaje.includes("UID de madre incorrecto")) {
@@ -156,6 +156,7 @@ export default function LoginScreen() {
         <Image
           source={require("@/assets/images/Logo_BabySecure.png")}
           style={styles.reactLogo}
+          contentFit="cover"
         />
       }
     >
@@ -270,6 +271,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     gap: 20,
     padding: 20,
+    paddingBottom: 80, // espacio para que el teclado no tape el último campo y el botón
   },
 
   title: {
@@ -366,6 +368,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: "absolute",
-    resizeMode: "cover",
   },
 });

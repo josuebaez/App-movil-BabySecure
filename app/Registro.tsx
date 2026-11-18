@@ -111,10 +111,15 @@ export default function RegistroScreen() {
     <ScrollView
       contentContainerStyle={styles.scrollContainer}
       showsVerticalScrollIndicator={false}
+      // Con el teclado abierto: sube el contenido y lleva al campo enfocado a la vista
+      automaticallyAdjustKeyboardInsets
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
     >
       <Image
         source={require("@/assets/images/bebes1.jpg")}
         style={styles.image}
+        contentFit="cover"
       />
 
       <View style={styles.registerContainer}>
@@ -318,13 +323,13 @@ export default function RegistroScreen() {
 const styles = StyleSheet.create({
   scrollContainer: {
     padding: 20,
+    paddingBottom: 80, // espacio para que el teclado no tape el último campo y el botón
     gap: 20,
     backgroundColor: "#81d6f0",
   },
   image: {
     width: "100%",
     height: 221,
-    resizeMode: "cover",
     borderRadius: 5,
   },
   registerContainer: {

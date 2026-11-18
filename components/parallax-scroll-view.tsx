@@ -53,6 +53,10 @@ export default function ParallaxScrollView({
       ref={scrollRef}
       style={{ backgroundColor, flex: 1 }}
       scrollEventThrottle={16}
+      // Con el teclado abierto: sube el contenido y lleva al campo enfocado a la vista
+      automaticallyAdjustKeyboardInsets
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
     >
       <Animated.View
         style={[
