@@ -65,23 +65,27 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
-      console.log("Intentando iniciar sesión con:", { identifier });
+      // El campo no pone mayúsculas solo; aquí se normaliza lo escrito.
+      const valor = identifier.trim();
+      const isEmail = valor.includes("@") && valor.includes(".");
+      const isMadreUID = !isEmail && valor.toUpperCase().startsWith("MAMÁ-");
 
-      const isMadreUID = identifier.startsWith("MAMÁ-");
-      const isEmail = identifier.includes("@") && identifier.includes(".");
+      console.log("Intentando iniciar sesión con:", { identifier: valor });
 
       let response;
 
       if (isMadreUID) {
+        // El UID siempre va en mayúsculas
         response = await api.post("/auth/login-madre", {
-          uid: identifier,
-          confirmacion_uid: password,
+          uid: valor.toUpperCase(),
+          confirmacion_uid: password.trim().toUpperCase(),
         });
         console.log("Login madre:", response.data);
       } else if (isEmail) {
         response = await api.post("/auth/login-familiar", {
-          email: identifier,
-          password: password,
+          email: valor,
+          // La "contraseña" del familiar es el UID de la madre
+          password: password.trim().toUpperCase(),
         });
         console.log("Login familiar:", response.data);
       } else {
@@ -176,7 +180,8 @@ export default function LoginScreen() {
             placeholderTextColor="#000"
             value={identifier}
             onChangeText={setIdentifier}
-            autoCapitalize="characters"
+            autoCapitalize="none"
+            autoCorrect={false}
             editable={!loading}
           />
         </ThemedView>
@@ -190,12 +195,14 @@ export default function LoginScreen() {
             <TextInput
               style={styles.inputField}
               placeholder={
-                identifier.startsWith("MAMÁ-") ? "Confirma tu UID" : "********"
+                identifier.toUpperCase().startsWith("MAMÁ-") ? "Confirma tu UID" : "********"
               }
               placeholderTextColor="#000"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!vercontraseña}
+              autoCapitalize="none"
+              autoCorrect={false}
               editable={!loading}
             />
 
@@ -216,7 +223,7 @@ export default function LoginScreen() {
 
         {identifier && (
           <View style={styles.loginTypeContainer}>
-            {identifier.startsWith("MAMÁ-") ? (
+            {identifier.toUpperCase().startsWith("MAMÁ-") ? (
               <ThemedText style={styles.loginTypeText}>
                 🔐 Iniciando sesión como MADRE
               </ThemedText>

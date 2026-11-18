@@ -138,6 +138,7 @@ export default function RegistroScreen() {
             placeholderTextColor="#000"
             value={nombre}
             onChangeText={setNombre}
+            autoCapitalize="words"
             editable={!loading}
           />
         </View>
@@ -153,6 +154,7 @@ export default function RegistroScreen() {
             placeholderTextColor="#000"
             value={apellidos}
             onChangeText={setApellidos}
+            autoCapitalize="words"
             editable={!loading}
           />
         </View>
